@@ -43,12 +43,6 @@ class DatabaseSeeder extends Seeder
         DB::table('marks')->truncate();
         Mark::factory(150)->create();
 
-
-
-
-
-
-
         Schema::disableForeignKeyConstraints();
         Model::reguard();
     }

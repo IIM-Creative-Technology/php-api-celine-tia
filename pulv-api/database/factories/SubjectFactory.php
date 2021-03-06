@@ -22,8 +22,8 @@ class SubjectFactory extends Factory
      */
     public function definition()
     {
-        $start = $this->faker->dateTimeBetween('next Monday', 'next Monday +7 days')->format("Y-m-d");
-        $end = $this->faker->dateTimeBetween($start, $start . ' +5 days')->format("Y-m-d");
+        $start = $this->faker->dateTimeBetween('next Monday', '+30 days')->format('Y-m-d');
+        $end = $this->faker->dateTimeBetween($start, $start . '+5 days')->format('Y-m-d');
 
         $teacher = DB::table('teachers')->select('id')->inRandomOrder()->limit(1)->get();
         $school_year = DB::table('school_classes')->select('id')->inRandomOrder()->limit(1)->get();
