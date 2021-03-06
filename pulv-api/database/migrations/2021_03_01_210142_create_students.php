@@ -23,7 +23,7 @@ class CreateStudents extends Migration
 
             //clé étrangère:promotion
             $table->unsignedBigInteger('id_school_year');
-            $table->foreign('id_school_year')->references('id')->on('classes')->onDelete('cascade');
+            $table->foreign('id_school_year')->references('id')->on('school_classes')->onDelete('cascade');
 
             $table->timestamps();
         });
