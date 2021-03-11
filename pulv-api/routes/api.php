@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\MarkController;
 use App\Http\Controllers\SchoolClassController;
 use App\Http\Controllers\StudentController;
@@ -21,7 +22,13 @@ use Illuminate\Support\Facades\Route;
 //     return $request->user();
 // });
 
-
+Route::group([
+    'middleware' => 'api',
+    'prefix' => 'auth'
+], function() {
+    Route::post('/login', [AuthController::class, 'login']);
+    Route::post('/logout', [AuthController::class, 'logout']);
+});
 /*
 |--------------------------------------------------------------------------
 | Routes : CLASSES
