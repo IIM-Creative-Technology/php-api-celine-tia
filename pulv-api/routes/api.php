@@ -1,9 +1,9 @@
 <?php
 
+use App\Http\Controllers\MarkController;
+use App\Http\Controllers\SchoolClassController;
 use App\Http\Controllers\StudentController;
-use App\Models\SchoolClass;
-use App\Models\Student;
-use Illuminate\Http\Request;
+use App\Http\Controllers\SubjectController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -28,22 +28,18 @@ use Illuminate\Support\Facades\Route;
 |--------------------------------------------------------------------------
 |*/
 
-// Nous retourne toutes les classes
-Route::get('/classes', function () {
-    return SchoolClass::all();
-});
+// Retourne toutes les classes
+Route::get('/classes', [SchoolClassController::class, 'getAllClasses']);
 
-// On ajoute une classe
-Route::post('/classes', function (Request $request) {
-    return SchoolClass::create($request->all());
-});
+// Ajoute une classe
+Route::post('/classes', [SchoolClassController::class, 'create']);
 
 // Modifie une classe
-Route::put('/classes/{classesId}', function ($classesId, Request $request) {
-    $class = SchoolClass::findOrFail($classesId);
-    $class->update($request->all());
-    return $class;
-});
+Route::put('/classes/{classesId}', [SchoolClassController::class, 'update']);
+
+// Retourne la liste des étudiants selon la promotion
+Route::get('/class/{className}', [StudentController::class, 'getStudentsByClass']);
+
 
 /*
 |--------------------------------------------------------------------------
@@ -57,38 +53,93 @@ Route::put('/classes/{classesId}', function ($classesId, Request $request) {
 |--------------------------------------------------------------------------
 |*/
 
-// Nous retourne toute la liste des étudiants
-Route::get('/students', function () {
-    return Student::all();
-});
+// Retourne toute la liste des étudiants
+Route::get('/students', [StudentController::class, 'getAllStudents']);
 
-// Nous retourne un étudiant en particulier
-Route::get('/students/{studentId}', function ($studentId) {
-    return Student::findOrFail($studentId);
-});
+// Retourne un étudiant en particulier
+Route::get('/students/{studentId}', [StudentController::class, 'getStudent']);
+
 
 // Modifie un étudiant choisi
-Route::put('/students/{StudentId}', function ($studentId, Request $request) {
-    $student = Student::findOrFail($studentId);
-    $student->update($request->all());
-    return $student;
-});
+Route::put('/students/{StudentId}', [StudentController::class, 'update']);
 
-// Supprimer un étudiant choisi
-Route::delete('/students/{studentId}', function ($studentId) {
-    return Student::findOrFail($studentId)->delete();
-});
+// Supprime un étudiant choisi
+Route::delete('/students/{studentId}', [StudentController::class, 'delete']);
 
-// On ajoute un étudiant
-Route::post('/students', function (Request $request) {
-    return Student::create($request->all());
-});
+// Ajoute un étudiant
+Route::post('/students', [StudentController::class, 'create']);
 
-// Nous retourne la liste des étudiants selon la promotion
-Route::get('/students/class/{className}', [StudentController::class, 'getStudentsByClass']);
+// Retourne la liste des notes de l'étudiant
+Route::get('/students/marks/{studentId}', [StudentController::class, 'getMark']);
 
 /*
 |--------------------------------------------------------------------------
 | FIN Routes : STUDENT
+|--------------------------------------------------------------------------
+|*/
+
+/*
+|--------------------------------------------------------------------------
+| Routes : INTERVENANTS
+|--------------------------------------------------------------------------
+|*/
+
+// Retourne toutes les intervenants
+Route::get('/teacher', [TeacherController::class, 'getAllTeachers']);
+
+// Retourne un intervenant
+Route::get('/teacher/{teacherId}', [TeacherController::class, 'getTeacher']);
+
+// Ajoute un intervenant
+Route::post('/teacher', [TeacherController::class, 'create']);
+
+// Modifie un intervenant
+Route::put('/teacher/{teacherId}', [TeacherController::class, 'update']);
+
+/*
+|--------------------------------------------------------------------------
+| FIN Routes : INTERVENANTS
+|--------------------------------------------------------------------------
+|*/
+
+/*
+|--------------------------------------------------------------------------
+| Routes : MATIERE
+|--------------------------------------------------------------------------
+|*/
+
+// Retourne toutes les matières
+Route::get('/subjects',  [SubjectController::class, 'getAllSubjects']);
+
+// Retourne une matière
+Route::get('/subjects/{subjectId}',  [SubjectController::class, 'getSubject']);
+
+// Ajoute une matière
+Route::post('/subjects', [SubjectController::class, 'create']);
+
+// Modifie une matière
+Route::put('/subjects/{subjectsId}', [SubjectController::class, 'update']);
+
+/*
+|--------------------------------------------------------------------------
+| FIN Routes : MATIERE
+|--------------------------------------------------------------------------
+|*/
+
+/*
+|--------------------------------------------------------------------------
+| Routes : NOTES
+|--------------------------------------------------------------------------
+|*/
+
+
+// Ajoute une note
+Route::post('/mark', [MarkController::class, 'create']);
+
+
+
+/*
+|--------------------------------------------------------------------------
+| FIN Routes : NOTES
 |--------------------------------------------------------------------------
 |*/
