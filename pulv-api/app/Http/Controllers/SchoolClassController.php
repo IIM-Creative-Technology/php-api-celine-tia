@@ -19,23 +19,24 @@ class SchoolClassController extends Controller
             'school_year' => 'required|string'
         ]);
         if($validator->fails()) {
-            return $validator->errors();
+            response()->json($validator->errors(), 400);
         }
 
         return SchoolClass::create($request->all());
     }
 
-    public function update(Request $request, SchoolClass $class)
+    public function update(Request $request, SchoolClass $classId)
     {
+        $class = SchoolClass::find($classId);
         $validator = Validator::make($request->all(), [
             'name' => 'required|string',
             'school_year' => 'required|string'
         ]);
         if($validator->fails()) {
-            return $validator->errors();
+            response()->json($validator->errors(), 400);
         }
 
         $class->update($request->all());
-        return $class;
+        return response()->json($class);
     }
 }

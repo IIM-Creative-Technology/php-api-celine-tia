@@ -24,24 +24,25 @@ class TeacherController extends Controller
             'first_year' => 'required|date_format:Y',
             ]);
         if($validator->fails()) {
-            return $validator->errors();
+            response()->json($validator->errors(), 400);
         }
 
         return Teacher::create($request->all());
     }
 
-    public function update(Request $request, Teacher $teacher)
+    public function update(Request $request, Teacher $teacherId)
     {
+        $teacher = Teacher::find($teacherId);
         $validator = Validator::make($request->all(), [
             'first_name' => 'required|string',
             'last_name' => 'required|string',
             'first_year' => 'required|date_format:Y',
             ]);
         if($validator->fails()) {
-            return $validator->errors();
+            response()->json($validator->errors(), 400);
         }
 
         $teacher->update($request->all());
-        return $teacher;
+        return response()->json($teacher);
     }
 }

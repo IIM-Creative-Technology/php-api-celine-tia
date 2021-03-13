@@ -27,14 +27,15 @@ class SubjectController extends Controller
             'id_teacher' => 'required|exists:teachers,id'
             ]);
         if($validator->fails()) {
-            return $validator->errors();
+            response()->json($validator->errors(), 400);
         }
 
         return Subject::create($request->all());
     }
 
-    public function update(Request $request, Subject $subject)
+    public function update(Request $request, Subject $subjectId)
     {
+        $subject = Subject::find($subjectId);
         $validator = Validator::make($request->all(), [
             'name' => 'required|string',
             'date_begin' => 'required|date_format:Y-m-d',
@@ -43,10 +44,10 @@ class SubjectController extends Controller
             'id_teacher' => 'required|exists:teachers,id'
             ]);
         if($validator->fails()) {
-            return $validator->errors();
+            response()->json($validator->errors(), 400);
         }
 
         $subject->update($request->all());
-        return $subject;
+        return response()->json($subject);
     }
 }

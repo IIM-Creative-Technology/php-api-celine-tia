@@ -27,14 +27,15 @@ class StudentController extends Controller
             'id_school_year' => 'required|exists:school_classes,id'
             ]);
         if($validator->fails()) {
-            return $validator->errors();
+            return response()->json($validator->errors(), 400);
         }
 
         return Student::create($request->all());
     }
 
-    public function update(Request $request, Student $student)
+    public function update(Request $request, Student $studentId)
     {
+        $student = Student::find($studentId);
         $validator = Validator::make($request->all(), [
             'first_name' => 'required|string',
             'last_name' => 'required|string',
@@ -43,11 +44,11 @@ class StudentController extends Controller
             'id_school_year' => 'required|exists:school_classes,id'
             ]);
         if($validator->fails()) {
-            return $validator->errors();
+            response()->json($validator->errors(), 400);
         }
 
         $student->update($request->all());
-        return $student;
+        return response()->json($student);
     }
 
     public function delete(Student $student)

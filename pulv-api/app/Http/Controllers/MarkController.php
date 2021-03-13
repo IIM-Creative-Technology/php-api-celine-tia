@@ -17,7 +17,7 @@ class MarkController extends Controller
             'score' => 'required|numeric|min:0|lte:20'
         ]);
         if ($validator->fails()) {
-            return $validator->errors();
+            response()->json($validator->errors(), 400);
         }
 
         return Mark::create($request->all());
