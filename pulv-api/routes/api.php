@@ -70,7 +70,7 @@ Route::middleware('jwt.auth')->group(function () {
 
 
     // Modifie un étudiant choisi
-    Route::put('/students/{StudentId}', [StudentController::class, 'update']);
+    Route::put('/students/{studentId}', [StudentController::class, 'update']);
 
     // Supprime un étudiant choisi
     Route::delete('/students/{studentId}', [StudentController::class, 'delete']);
@@ -143,7 +143,7 @@ Route::middleware('jwt.auth')->group(function () {
 
 
     // Ajoute une note
-    Route::post('/mark', [MarkController::class, 'create']);
+    Route::post('/marks', [MarkController::class, 'create']);
 
 
 

@@ -26,7 +26,7 @@ class DatabaseSeeder extends Seeder
         Schema::disableForeignKeyConstraints();
 
         DB::table('users')->truncate();
-        User::factory(10)->create();
+        User::factory(3)->create();
 
         DB::table('school_classes')->truncate();
         SchoolClass::factory(10)->create();
